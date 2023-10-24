@@ -1,13 +1,16 @@
 <template>
-  <div class="app">
+  <div class="app font-monspace">
     <div class="content">
-      <AppInfo />
-      <div class="search-panel">
+      <AppInfo
+        :allMoviesCount="movies.length"
+        :favouriteMoviesCount="movies.filter((c) => c.favourite).length"
+      />
+      <div class="search-panel components-common-style">
         <SearchPanel />
         <AppFilter />
       </div>
-      <MovieList />
-      <MovieAddItem />
+      <MovieList :movies="movies" />
+      <MovieAddItem @createMovie="createMovie" />
     </div>
   </div>
 </template>
@@ -26,6 +29,37 @@ export default {
     MovieList,
     MovieAddItem,
   },
+  // data
+  data() {
+    return {
+      movies: [
+        {
+          name: "Osmaondagi bolalar",
+          viewers: 234,
+          favourite: false,
+          like: true,
+        },
+        {
+          name: "Spidermen",
+          viewers: 899,
+          favourite: true,
+          like: true,
+        },
+        {
+          name: "The Godfather",
+          viewers: 944,
+          favourite: true,
+          like: false,
+        },
+      ],
+    };
+  },
+  // Methods
+  methods: {
+    createMovie(item) {
+      this.movies.push(item);
+    },
+  },
 };
 </script>
 
@@ -42,13 +76,5 @@ export default {
   background-color: #fff;
   margin: 0 auto;
   padding: 5rem 0;
-}
-
-.search-panel {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background-color: #fcfaf5;
-  border-radius: 4px;
-  box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.15);
 }
 </style>
